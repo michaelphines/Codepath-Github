@@ -82,7 +82,7 @@ static NSString * const kClientSecret = GITHUB_CLIENT_SECRET;
 - (NSString *)description {
     return [NSString stringWithFormat:@"\n\tName:%@\n\tDescription:%@\n\tStars:%ld\n\tForks:%ld\n\tOwner:%@\n\tAvatar:%@\n\t",
             self.name,
-            self.description,
+            self.repoDescription,
             self.stars,
             self.forks,
             self.ownerHandle,

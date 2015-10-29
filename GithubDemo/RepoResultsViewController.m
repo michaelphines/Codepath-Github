@@ -10,10 +10,14 @@
 #import "MBProgressHUD.h"
 #import "GithubRepo.h"
 #import "GithubRepoSearchSettings.h"
+#import "RepoTableViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
-@interface RepoResultsViewController ()
+@interface RepoResultsViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *repoTableView;
 @property (nonatomic, strong) GithubRepoSearchSettings *searchSettings;
+@property (strong, nonatomic) NSArray *repos;
 @end
 
 @implementation RepoResultsViewController
@@ -25,16 +29,43 @@
     self.searchBar.delegate = self;
     [self.searchBar sizeToFit];
     self.navigationItem.titleView = self.searchBar;
+    [self setUpTableView];
     [self doSearch];
+}
+
+- (void)setUpTableView {
+    self.repoTableView.rowHeight = UITableViewAutomaticDimension;
+    self.repoTableView.estimatedRowHeight = 100;
+    [self.repoTableView registerNib:[UINib nibWithNibName:@"RepoTableViewCell" bundle:nil] forCellReuseIdentifier:@"repoTableViewCell"];
+    self.repoTableView.delegate = self;
+    self.repoTableView.dataSource = self;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    RepoTableViewCell *cell = [self.repoTableView dequeueReusableCellWithIdentifier:@"repoTableViewCell"];
+    GithubRepo *repo = self.repos[indexPath.row];
+    cell.nameLabel.text = repo.name;
+    cell.ownerLabel.text = repo.ownerHandle;
+    cell.starsLabel.text = [NSString stringWithFormat:@"%ld", (long)repo.stars];
+    cell.forksLabel.text = [NSString stringWithFormat:@"%ld", (long)repo.forks];
+    cell.descriptionLabel.text = repo.repoDescription;
+    [cell.avatarImageView setImageWithURL:[NSURL URLWithString:repo.ownerAvatarURL]];
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.repos.count;
 }
 
 - (void)doSearch {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [GithubRepo fetchRepos:self.searchSettings successCallback:^(NSArray *repos) {
+        self.repos = repos;
         for (GithubRepo *repo in repos) {
             NSLog(@"%@", repo);
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.repoTableView reloadData];
     }];
 }
 
