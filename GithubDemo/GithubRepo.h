@@ -12,6 +12,7 @@
 @interface GithubRepo : NSObject <NSCopying>
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *repoDescription;
 @property (nonatomic, strong) NSString *ownerHandle;
 @property (nonatomic, strong) NSString *ownerAvatarURL;
 @property NSInteger stars;

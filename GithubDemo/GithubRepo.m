@@ -26,6 +26,7 @@ static NSString * const kClientSecret = GITHUB_CLIENT_SECRET;
     self.forks = [jsonResult[@"forks_count"] integerValue];
     self.ownerHandle = jsonResult[@"owner"][@"login"];
     self.ownerAvatarURL = jsonResult[@"owner"][@"avatar_url"];
+    self.repoDescription = jsonResult[@"description"];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
@@ -79,8 +80,9 @@ static NSString * const kClientSecret = GITHUB_CLIENT_SECRET;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"\n\tName:%@\n\tStars:%ld\n\tForks:%ld\n\tOwner:%@\n\tAvatar:%@\n\t",
+    return [NSString stringWithFormat:@"\n\tName:%@\n\tDescription:%@\n\tStars:%ld\n\tForks:%ld\n\tOwner:%@\n\tAvatar:%@\n\t",
             self.name,
+            self.description,
             self.stars,
             self.forks,
             self.ownerHandle,
