@@ -25,12 +25,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.searchSettings = [[GithubRepoSearchSettings alloc] init];
+    [self setUpSearchBar];
+    self.navigationItem.titleView = self.searchBar;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(loadSettings)];
+    [self setUpTableView];
+    [self doSearch];
+}
+
+- (void)loadSettings {
+    
+}
+
+- (void)setUpSearchBar {
     self.searchBar = [[UISearchBar alloc] init];
     self.searchBar.delegate = self;
     [self.searchBar sizeToFit];
-    self.navigationItem.titleView = self.searchBar;
-    [self setUpTableView];
-    [self doSearch];
 }
 
 - (void)setUpTableView {
