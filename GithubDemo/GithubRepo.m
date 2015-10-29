@@ -9,6 +9,7 @@
 #import "GithubRepo.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "GithubRepoSearchSettings.h"
+#import "Constants.h"
 
 @interface GithubRepo ()
 @end
@@ -16,8 +17,8 @@
 @implementation GithubRepo
 
 static NSString * const kReposUrl = @"https://api.github.com/search/repositories";
-static NSString * const kClientId = nil;
-static NSString * const kClientSecret = nil;
+static NSString * const kClientId = GITHUB_CLIENT_ID;
+static NSString * const kClientSecret = GITHUB_CLIENT_SECRET;
 
 - (void)initializeWithDictionary:(NSDictionary *)jsonResult {
     self.name = jsonResult[@"name"];

@@ -1,0 +1,16 @@
+//
+//  Constants.h
+//  GithubDemo
+//
+//  Created by Michael Hines on 10/29/15.
+//  Copyright © 2015 codepath. All rights reserved.
+//
+
+#ifndef Constants_h
+#define Constants_h
+
+#define GITHUB_CLIENT_ID @"client_id_missing"
+#define GITHUB_CLIENT_SECRET @"client_secret_missing"
+
+
+#endif /* Constants_h */
